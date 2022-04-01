@@ -1,5 +1,5 @@
 import '../css/styles.css';
-import FetchAPICountries from './FetchAPICountries';
+import FetchAPICountries from './fetchAPICountries';
 import CountriesTpl from '../countries.hbs';
 import CountryTpl from '../country.hbs';
 import Notiflix from 'notiflix';

@@ -14,7 +14,6 @@ const refs = {
 
 const fetchAPICountries = new FetchAPICountries();
 
-console.log(refs.listCountries);
 refs.searchInput.addEventListener("input", debounce((e)=>selectionOfCountries(e), DEBOUNCE_DELAY));           
 
 
@@ -33,34 +32,35 @@ function selectionOfCountries(e) {
       if (arrayCountries.length > 1) {
         arrayCountries.forEach(element => {
             objItem = {
-              flag: element.flags[0],
-              name: element.name.common,
+              flag: element.flags.svg,
+              name: element.name,
             }
           appendCountriesMurkup(objItem);
-          // arrayCountries = [];
+
         });
         }
         /////ARRAY CONSISTING OF A ONE OBJECT
       if (arrayCountries.length == 1) {
         const country = arrayCountries[0];
-        const languages = Object.values(country.languages);
+        const languages = country.languages
+          .map(language => language.name)
+          .join(', ');
         
+        console.log(languages);
           objItem = {
-          flag: country.flags[0],
-          country:   country.name.common,
-          capital: country.capital[0],
+          flag: country.flags.svg,
+          country:   country.name,
+          capital: country.capital,
           population: country.population,
           languages: languages,
           }
-          
+          console.log(objItem);
           appendCountryMurkup(objItem);
         }
-        if (arrayCountries.status==404)  {
-        // console.log(arrayCountries.status);
-        Notiflix.Notify.failure("Oops, there is no country with that name");
-        }
     })
-      
+  .catch(() => {
+    Notiflix.Notify.failure("Oops, there is no country with that name");
+    });
 }
 
 

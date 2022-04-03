@@ -1,16 +1,19 @@
+import Notiflix from 'notiflix';
 export default class FetchAPICountries {
     constructor() {
         this.searchQuery = '';   
     }
     
     fetchCountries(searchQuery) {
-        const url = `https://restcountries.com/v3/name/${this.searchQuery}`
+        const url = `https://restcountries.com/v2/name/${this.searchQuery}`
   
         return fetch(url)
-            .then(response => { return response.json() })
-            .then(arrayOfCountries => {
-                return arrayOfCountries;
-            });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status)
+                }
+                return response.json()
+            })
     }
 
     get query(){
